@@ -1,18 +1,18 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import "./styles.css";
 
 
 class Home extends Component {
     render() {
         return (
             <div className="App">
-                <h1>Project Home</h1>
-                {/* Link to List.js */}
-                <Link to={'./list'}>
-                    <button variant="raised">
-                        My List
-        </button>
-                </Link>
+                <ul>
+                    <li><a class="active" href="/">Home</a></li>
+                    <li><a href="/myBoards">My Boards</a></li>
+                    <li><a href="/joinedBoards">Joined Boards</a></li>
+                    <li><a href="/profile">Profile</a></li>
+                </ul>
             </div>
         );
     }
