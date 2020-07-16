@@ -7,7 +7,7 @@ class JoinBoard extends Component {
                 <form action="/" class="joinBoard">
                     <label class="boardIDClass" for="boardID">Board ID: </label>
                     <input type="text" id="boardID" name="boardID"></input>
-                    <input type="submit" value="Submit"></input>
+                    <input type="submit" value="Join"></input>
                 </form>
             </div>
         );
