@@ -1,5 +1,5 @@
 * { margin:0; padding:0; }
-html, body, #root, .mainApp {
+html, body, .mainApp {
   height: 100%;
   width: 100%;
   font-family: "Roboto", Arial, Helvetica, sans-serif;
@@ -73,27 +73,49 @@ p {
   .container {
     max-width: 70%;
   }
+  .joinBoard {
+    flex-direction: row;
+  }
 }
 
 @media only screen and (min-width: 900px) {
   .container {
     max-width: 50%;
   }
+  .joinBoard {
+    flex-direction: row;
+  }
 }
-
+.objectContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  max-height: 200px;
+  margin-top: 2em;
+}
+object {
+  height: 200px;
+}
 .createBoard {
   width: 100%;
   height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
+  min-height: 90vh;
 }
+/* .joinBoard{
+  flex-direction: column;
+} */
+
 .joinBoardContainer {
   width: 100%;
   height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
+  min-height: 90vh;
 }
 
 .createNewBoard {
