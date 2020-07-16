@@ -1,5 +1,7 @@
 # izzy-and-the-isolators
 
+This website is aimed to provide users with a collaborative workspace allowing for the sharing of ideas on a digital whiteboard.
+
 ## Set up
 
 - ✅ you must have NodeJS and Git installed
