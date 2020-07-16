@@ -1,17 +1,21 @@
+* { margin:0; padding:0; }
+
 ul {
     list-style-type: none;
     margin: 0;
     padding: 0;
     overflow: hidden;
     background-color: #2F4F4F;
-    font-family: "Times New Roman", Times, serif;
+    font-family: "Roboto";
   }
   
-  li {
+  .nav li {
     float: left;
+    display: block;
+    width: 33%;
   }
   
-  li a {
+  .nav li a {
     display: block;
     color: white;
     text-align: center;
@@ -21,4 +25,17 @@ ul {
   
   li a:hover {
     background-color: #111;
+  }
+
+  h3 {
+    margin-top: 30px;
+    margin-bottom: 10px;
+    color: rgb(65, 65, 65);
+  }
+  
+  p {
+    margin-left: 100px;
+    margin-right: 100px;
+    color: rgb(32, 32, 32);
+    font-size: 20px;
   }
