@@ -8,7 +8,7 @@ import MyBoards from "./pages/MyBoards";
 import Canvas from "./pages/SketchAndSocket";
 import CreateBoard from "./pages/CreateBoard";
 import JoinBoard from "./pages/JoinBoard";
-
+import Footer from "./Footer";
 
 class App extends Component {
   render() {
@@ -23,6 +23,7 @@ class App extends Component {
           <Route path='/canvas' component={Canvas} />
           <Route path='/myBoards' component={MyBoards} />
         </Switch>
+        <Footer/>
       </div>
     )
     return (
