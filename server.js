@@ -1,21 +1,19 @@
 const express = require("express");
 const http = require("http");
 const socketIo = require("socket.io");
-
 const port = process.env.PORT || 4001;
 const index = require("./routes/index");
-
 const app = express();
 app.use(index);
-
 const server = http.createServer(app);
-
 const io = socketIo(server);
+
+const CONNECTED_CLIENTS = {};
 
 
 io.on("connection", (socket) => {
     console.log("New client connected");
-
+    console.log(socket.id);
     socket.on("disconnect", () => {
         console.log("Client disconnected");
 
@@ -34,7 +32,7 @@ io.on("connection", (socket) => {
         socket.broadcast.emit("mouseMoved", data);
         // the below funciton will emit to all sockets, including yourself
         // io.sockets.emit("mouseMoved", data);
-        console.log(data);
+        // console.log(data);
     });
 
 });
