@@ -6,7 +6,6 @@ class Home extends Component {
     render() {
         return (
             <div className="App">
-                
                 <h3>Hello, and welcome.</h3>
                 <br></br>
                 <p>This website is aimed to provide users with a collaborative workspace allowing for the sharing of ideas on a digital whiteboard.</p>

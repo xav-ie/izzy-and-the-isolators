@@ -9,33 +9,50 @@ ul {
     font-family: "Roboto";
   }
   
-  .nav li {
-    float: left;
-    display: block;
-    width: 33%;
-  }
-  
-  .nav li a {
-    display: block;
-    color: white;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-  }
-  
-  li a:hover {
-    background-color: #111;
-  }
+.nav li {
+  float: left;
+  display: block;
+  width: 33%;
+}
 
-  h3 {
-    margin-top: 30px;
-    margin-bottom: 10px;
-    color: rgb(65, 65, 65);
-  }
-  
-  p {
-    margin-left: 100px;
-    margin-right: 100px;
-    color: rgb(32, 32, 32);
-    font-size: 20px;
-  }
+.nav li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+li a:hover {
+  background-color: #111;
+}
+
+h3 {
+  margin-top: 30px;
+  margin-bottom: 10px;
+  color: rgb(65, 65, 65);
+  font-family: "Roboto";
+}
+
+p {
+  margin-left: 100px;
+  margin-right: 100px;
+  color: rgb(32, 32, 32);
+  font-size: 20px;
+  font-family: "Roboto";
+}
+
+.createNewBoard {
+  color: white;
+  margin-top: 50%;
+  font-family: "Roboto";
+  font-size: 30px;
+  background-color: #2F4F4F;
+  padding: 14px 16px;
+}
+.createNewBoard:hover {
+  background-color: black;
+}
+/* p.test{
+  color: blue;
+} */
