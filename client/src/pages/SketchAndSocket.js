@@ -23,6 +23,8 @@ class SketchAndSocket extends React.Component {
             let eraseButton;
             let circleButton;
             let squareButton;
+            let clearButton;
+            let saveButton;
             let textButton;
             let inputBar;
             let submitButton;
@@ -41,41 +43,49 @@ class SketchAndSocket extends React.Component {
             
             //create color picker
             colorPicker = p.createColorPicker('#ed225d');
-            colorPicker.position(10, 200);
+            colorPicker.position(10, 100);
             
             //create slider
             slider = p.createSlider(1, 20, 5, 1);
-            slider.position(10, 100);
+            slider.position(10, 50);
             slider.style('width', '80px');
 
             //create butoons
             drawButton = p.createButton('DRAW');
-            drawButton.position(10, 250);
+            drawButton.position(10, 150);
             drawButton.mousePressed(p.drawStuff);
 
             eraseButton = p.createButton('ERASE');
-            eraseButton.position(10, 300);
+            eraseButton.position(10, 200);
             eraseButton.mousePressed(p.erase);
 
             circleButton = p.createButton('CIRCLE');
-            circleButton.position(10, 350);
+            circleButton.position(10, 250);
             circleButton.mousePressed(p.circle);
 
             squareButton = p.createButton('SQUARE');
-            squareButton.position(10, 400);
-            //squareButton.mousePressed(square);
+            squareButton.position(10, 300);
+            squareButton.mousePressed(p.square);
 
             inputBar = p.createInput();
             inputBar.id('inputBar');
-            inputBar.position(0, 500)
+            inputBar.position(0, 350)
             submitButton = p.createButton('Submit comment');
-            submitButton.position(10, 550)
+            submitButton.position(10, 400)
             submitButton.mousePressed(p.insertText);
+
+            clearButton = p.createButton('CLEAR CANVAS');
+            clearButton.position(10, 450);
+            clearButton.mousePressed(p.clearCanvas)
+
+            saveButton = p.createButton('SAVE CANVAS');
+            saveButton.position(10, 500);
+            saveButton.mousePressed(p.saveCanvas)
 
             p.noStroke();
             socket.on("mouseMoved", ({ x, y , px, py, color, size, type}) => {
                 p.stroke(color);
-                p.strokeWeight(size);
+                p.strokeWeight(size*2);
                 p.line(x, y, px, py);
             });
             p.textSize(32);
@@ -125,7 +135,33 @@ class SketchAndSocket extends React.Component {
             }
         }
         p.mouseReleased = () => {
+            let shapeSize = slider.value()*10;
+            let colors = colorPicker.value();
+            let data = {
+                x: p.mouseX,
+                y: p.mouseY,
+                px: p.pmouseX,
+                py: p.pmouseY,
+                color: colors,
+                size: shapeSize,
+                type: ""
+            };
+            if(index == 0){
+                p.fill(colors);
+                p.ellipse(p.mouseX, p.mouseY, shapeSize, shapeSize);
+                index = -1;
+                data.type = "circle";
+                socket.emit("mouseMoved", data);
 
+            }
+            if (index == 1){
+                console.log("WHEN THE MOON HITS YOUR EYE LIKE A BIG PIZZA PIE")
+                p.fill(colors);
+                p.rect(p.mouseX, p.mouseY, shapeSize, shapeSize);
+                index = -1;
+                data.type = "rect";
+                socket.emit("mouseMoved", data);
+            }
         }
         
         p.drawStuff = () => {
@@ -135,6 +171,7 @@ class SketchAndSocket extends React.Component {
             index = 0;
         }
         p.square = () => {
+            console.log("THATS AMORE");
             index = 1;
         }
         p.erase = () => {
@@ -143,9 +180,13 @@ class SketchAndSocket extends React.Component {
         p.insertText = () =>{
             index = 2;
         }
-        
-
-        
+        p.clearCanvas = () =>{
+            p.clear();
+            p.background(20);
+        }
+        p.saveCanvas = () =>{
+            p.save('canvas.jpg')
+        }
     }
 
     componentDidMount() {
