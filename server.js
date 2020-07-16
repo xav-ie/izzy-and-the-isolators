@@ -3,7 +3,39 @@ const http = require("http");
 const socketIo = require("socket.io");
 const port = process.env.PORT || 4001;
 const index = require("./routes/index");
+const session = require('express-session');
+var cookieSession = require('cookie-session');
+
 const app = express();
+
+app.set('trust proxy', 1) // trust first proxy
+
+// app.use(session({ secret: 'ssshhhhh', saveUninitialized: true, resave: true }));
+// app.use(express.cookieSession({
+//     key: 'app.sess',
+//     secret: 'SUPERsekret'
+// }));
+// app.use(cookieSession({
+//     name: 'session',
+//     keys: ['key1', 'key2'],
+//     secret: "woo"
+// }))
+app.use(cookieSession({
+    name: 'session',
+    keys: ['key1', 'key2'],
+    maxAge: 60 * 1000
+}));
+
+
+
+app.use(function (req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*"); // update to match the domain you will make the request from
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});
+
+
+
 app.use(index);
 const server = http.createServer(app);
 const io = socketIo(server);

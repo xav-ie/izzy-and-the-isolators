@@ -2,9 +2,10 @@
 
 ## Set up
 
-- ✅ you must have NodeJS and Git installed
+- ✅ you must have NodeJS, Git, and Redis installed
   - 👉 https://nodejs.org
   - 👉 https://git-scm.com
+  - 👉 https://redis.io/download
 - 📝 clone repository with `git clone https://github.com/xav-ie/izzy-and-the-isolators.git`
 - 🔌 To start socket server:
   - 📂 `cd izzy-and-the-isolators`
