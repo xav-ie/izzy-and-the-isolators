@@ -13,7 +13,7 @@ function setup() {
 
     createCanvas(100, 100);
     colorPicker = createColorPicker('#ed225d');
-    colorPicker.position(0, height + 5);
+    colorPicker.position(10, 200);
 
 
 
@@ -53,7 +53,7 @@ function setup() {
     });
 
     slider = createSlider(1, 20, 5, 1);
-    slider.position(10, 10);
+    slider.position(10, 100);
     slider.style('width', '80px');
 
 }
@@ -63,6 +63,30 @@ function draw() { }
 function mouseDragged() {
     //console.log(`${mouseX}, ${mouseY}`);
     //fill(colorPicker.color());
+    if(index == 3){
+        let brushSize = slider.value();
+        colors = '#282828';
+        console.log("is this even hit?")
+        
+        stroke(40,40,40)
+        // erase(40,255);
+        // stroke(40);
+        strokeWeight(brushSize);
+        line(mouseX, mouseY, pmouseX, pmouseY);
+    
+        let data = {
+            x: mouseX,
+            y: mouseY,
+            px: pmouseX,
+            py: pmouseY,
+            color: colors,
+            size: brushSize,
+            type: ""
+        };
+        data.type = "erase";
+        socket.emit("mouseMoved", data);
+    }
+
     if(index == -1){
     let brushSize = slider.value();
     colors = colorPicker.value();
@@ -112,6 +136,7 @@ function mouseReleased(){
         socket.emit("mouseMoved", data);
     }
 
+        index = -1
     
 }
 function drawCircle(){
@@ -121,4 +146,7 @@ function drawCircle(){
 function drawSquare(){
     index = 1;
     console.log("circle was pressed")
+}
+function eraseIndexChange(){
+    index=3;
 }

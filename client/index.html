@@ -10,6 +10,7 @@
         body,
         html,
         canvas {
+            right:20px;
             margin: 0;
             padding: 0;
             width: 100%;
@@ -21,10 +22,15 @@
 
 <body>
     <div class="toolbar">
-        <input type="submit" class="size-button" onClick=drawCircle() value ="CIRCLE">
-        <input type="submit" class="size-button" onClick=drawSquare() value ="SQUARE">
-        <input type="file" id="img" name="img" accept="image/*" >
-        <input type="submit" value="Upload Image" name="submitImage" onClick=loadImage()>
+        <p>
+            <input type="submit" class="circle-button" onClick=drawCircle() value ="CIRCLE">
+        </p>
+        <p>
+            <input type="submit" class="square-button" onClick=drawSquare() value ="SQUARE">
+        </p>
+        <p>
+            <input type="submit" class="erase-button" onClick=eraseIndexChange() value ="ERASE">
+        </p>
       </div>
     <script src="https://cdn.jsdelivr.net/npm/p5@1.0.0/lib/p5.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
@@ -32,6 +38,7 @@
         let count = 0;
         
     </script>
+
     <script src="/client/sketch.js"></script>
     <!-- <button onclick="happy()">HAPPY</button> -->
     
