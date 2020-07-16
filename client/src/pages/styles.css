@@ -171,12 +171,19 @@ input[type="submit"]:hover {
   cursor: pointer;
 }
 
-.Footer{
+footer{
   position: fixed;
-   left: 0;
-   bottom: 0;
-   width: 100%;
-   background-color: red;
-   color: white;
-   text-align: center;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: #1a1446;
+  text-align: center;
+  display: block;
+  color: white;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+footer p{
+  color: white;
 }
