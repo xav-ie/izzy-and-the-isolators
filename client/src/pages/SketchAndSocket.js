@@ -25,10 +25,12 @@ class SketchAndSocket extends React.Component {
                 p.fill(255, 255, 0);
                 p.ellipse(x, y, 60);
             });
+            p.textSize(32);
+            p.fill(255);
         }
 
         p.draw = () => {
-
+            p.text('word', 10, 30);
         }
 
         p.mouseDragged = () => {

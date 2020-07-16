@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 class JoinBoard extends Component {
     render() {
         return (
-            <div className="App">
+            <div className="joinBoardContainer">
                 <form action="/" class="joinBoard">
                     <label class="boardIDClass" for="boardID">Board ID: </label>
                     <input type="text" id="boardID" name="boardID"></input>
