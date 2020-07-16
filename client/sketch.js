@@ -22,12 +22,6 @@ function setup() {
     noStroke();
     background(40);
 
-    //   const happy = () => {
-    //     socket.emit("happy", {
-    //       reason: "I am learning WebSockets",
-    //     });
-    //   };
-
     socket.on("serverMsg", (data) => {
         console.log(`server message: ${data.msg}`);
     });
@@ -61,16 +55,12 @@ function setup() {
 function draw() { }
 
 function mouseDragged() {
-    //console.log(`${mouseX}, ${mouseY}`);
-    //fill(colorPicker.color());
     if(index == 3){
         let brushSize = slider.value();
         colors = '#282828';
         console.log("is this even hit?")
         
         stroke(40,40,40)
-        // erase(40,255);
-        // stroke(40);
         strokeWeight(brushSize);
         line(mouseX, mouseY, pmouseX, pmouseY);
     
@@ -93,7 +83,6 @@ function mouseDragged() {
 
     stroke(colorPicker.color());
     strokeWeight(brushSize);
-    //ellipse(mouseX, mouseY, 10);
     line(mouseX, mouseY, pmouseX, pmouseY);
     
     const data = {
@@ -135,9 +124,7 @@ function mouseReleased(){
         data.type = "rect"
         socket.emit("mouseMoved", data);
     }
-
-        index = -1
-    
+    index = -1
 }
 function drawCircle(){
     index = 0;
