@@ -54,18 +54,25 @@ class SketchAndSocket extends React.Component {
             drawButton = p.createButton('DRAW');
             drawButton.position(10, 150);
             drawButton.mousePressed(p.drawStuff);
+            p.styleElement(drawButton, ["border", "none", "display", "inline-block", "padding" , "12px 10px" , "text-align" , "center" , "cursor", "pointer" , "white-space", "no-wrap", "color" , "#1a1446", "background", "#ffd000"]);
 
             eraseButton = p.createButton('ERASE');
             eraseButton.position(10, 200);
             eraseButton.mousePressed(p.erase);
+            p.styleElement(eraseButton, ["border", "none", "display", "inline-block", "padding" , "12px 10px" , "text-align" , "center" , "cursor", "pointer" , "white-space", "no-wrap", "color" , "#1a1446", "background", "#ffd000"]);
+
 
             circleButton = p.createButton('CIRCLE');
             circleButton.position(10, 250);
             circleButton.mousePressed(p.circle);
+            p.styleElement(circleButton, ["border", "none", "display", "inline-block", "padding" , "12px 10px" , "text-align" , "center" , "cursor", "pointer" , "white-space", "no-wrap", "color" , "#1a1446", "background", "#ffd000"]);
+
 
             squareButton = p.createButton('SQUARE');
             squareButton.position(10, 300);
             squareButton.mousePressed(p.square);
+            p.styleElement(squareButton, ["border", "none", "display", "inline-block", "padding" , "12px 10px" , "text-align" , "center" , "cursor", "pointer" , "white-space", "no-wrap", "color" , "#1a1446", "background", "#ffd000"]);
+
 
             inputBar = p.createInput();
             inputBar.id('inputBar');
@@ -73,14 +80,17 @@ class SketchAndSocket extends React.Component {
             submitButton = p.createButton('Submit comment');
             submitButton.position(10, 400)
             submitButton.mousePressed(p.insertText);
+            p.styleElement(submitButton, ["border", "none", "display", "inline-block", "padding" , "12px 10px" , "text-align" , "center" , "cursor", "pointer" , "white-space", "no-wrap", "color" , "#1a1446", "background", "#ffd000"]);
 
             clearButton = p.createButton('CLEAR CANVAS');
             clearButton.position(10, 450);
             clearButton.mousePressed(p.clearCanvas)
+            p.styleElement(clearButton, ["border", "none", "display", "inline-block", "padding" , "12px 10px" , "text-align" , "center" , "cursor", "pointer" , "white-space", "no-wrap", "color" , "#1a1446", "background", "#ffd000"]);
 
             saveButton = p.createButton('SAVE CANVAS');
             saveButton.position(10, 500);
             saveButton.mousePressed(p.saveCanvas)
+            p.styleElement(saveButton, ["border", "none", "display", "inline-block", "padding" , "12px 10px" , "text-align" , "center" , "cursor", "pointer" , "white-space", "no-wrap", "color" , "#1a1446", "background", "#ffd000"]);
 
             p.noStroke();
             socket.on("mouseMoved", ({ x, y , px, py, color, size, type}) => {
@@ -186,6 +196,20 @@ class SketchAndSocket extends React.Component {
         }
         p.saveCanvas = () =>{
             p.save('canvas.jpg')
+        }
+
+
+
+        p.styleElement = (element, styles) => {
+            if (styles.length == 0 || styles.length % 2 !== 0) {
+                throw "Styles array is not evenly sized or is empty!";
+            }
+            if (!element) {
+                throw "Please pass in an element";
+            }
+            for (var i = 0; i < styles.length; i += 2) {
+                element.style(styles[i], styles[i + 1]);
+            }
         }
     }
 
