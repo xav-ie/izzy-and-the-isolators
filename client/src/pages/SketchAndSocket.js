@@ -32,7 +32,7 @@ class SketchAndSocket extends React.Component {
             let slider;
             let index = -1;
             let globalSize = 10;
-            let type = "";
+            let type2 = "";
             let msg = "";
 
         p.setup = () => {
@@ -94,9 +94,22 @@ class SketchAndSocket extends React.Component {
 
             p.noStroke();
             socket.on("mouseMoved", ({ x, y , px, py, color, size, type}) => {
-                p.stroke(color);
-                p.strokeWeight(size*2);
-                p.line(x, y, px, py);
+                if(type === "circle"){
+                    p.fill(color)
+                    p.ellipse(x,y,size,size)
+                }
+                else if (type === "rect"){
+                    p.fill(color)
+                    p.rect(x,y,size,size)
+                }else if (type === "clear"){
+                    p.clear();
+                    p.background(20);
+                }
+                else{
+                    p.stroke(color);
+                    p.strokeWeight(size*2);
+                    p.line(x, y, px, py);
+                }
             });
             p.textSize(32);
             
@@ -121,11 +134,6 @@ class SketchAndSocket extends React.Component {
                 };
                 socket.emit("mouseMoved", data);
             }
-            if(index == 2){
-                msg = inputBar.value;
-                p.textSize(30);
-                p.text(msg, p.mouseX, p.mouseY);
-            }
             if(index == 3){
                 let brushSize = slider.value();
                 let colors = '#141414'
@@ -145,8 +153,9 @@ class SketchAndSocket extends React.Component {
             }
         }
         p.mouseReleased = () => {
-            let shapeSize = slider.value()*10;
+            let shapeSize = slider.value()*20;
             let colors = colorPicker.value();
+            let brushSize = slider.value();
             let data = {
                 x: p.mouseX,
                 y: p.mouseY,
@@ -165,12 +174,20 @@ class SketchAndSocket extends React.Component {
 
             }
             if (index == 1){
-                console.log("WHEN THE MOON HITS YOUR EYE LIKE A BIG PIZZA PIE")
                 p.fill(colors);
                 p.rect(p.mouseX, p.mouseY, shapeSize, shapeSize);
                 index = -1;
                 data.type = "rect";
                 socket.emit("mouseMoved", data);
+            }
+            if(index == 2){
+                msg = inputBar.value();
+                p.textSize(shapeSize);
+                p.fill(0);
+                p.stroke(colors);
+                p.strokeWeight(shapeSize/10);
+                p.text(msg, p.mouseX, p.mouseY);
+                index = -1;
             }
         }
         
@@ -193,6 +210,16 @@ class SketchAndSocket extends React.Component {
         p.clearCanvas = () =>{
             p.clear();
             p.background(20);
+            let data = {
+                x: p.mouseX,
+                y: p.mouseY,
+                px: p.pmouseX,
+                py: p.pmouseY,
+                color: "",
+                size: "",
+                type: "clear"
+            };
+            socket.emit("mouseMoved", data);
         }
         p.saveCanvas = () =>{
             p.save('canvas.jpg')
