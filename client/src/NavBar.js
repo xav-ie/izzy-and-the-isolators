@@ -3,12 +3,12 @@ import { Link } from "react-router-dom";
 import "./pages/styles.css";
 
 const NavBar = () => {
-    return (<ul>
+    return (<ul className="nav">
         <li><Link to="/">Home</Link></li>
-        <li><Link to="/myBoards">My Boards</Link></li>
-        <li><Link to="/joinedBoards">Joined Boards</Link></li>
-        <li><Link to="/profile">Profile</Link></li>
-    </ul>);
+        <li><Link to="/createBoard">Create Board</Link></li>
+        <li><Link to="/joinBoard">Join Board</Link></li>
+    </ul>)
+    
 }
 
 export default NavBar;
