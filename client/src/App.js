@@ -13,7 +13,7 @@ import JoinBoard from "./pages/JoinBoard";
 class App extends Component {
   render() {
     const App = () => (
-      <div>
+      <div className="mainApp">
         <NavBar />
         <Switch>
           <Route exact path='/' component={Home} />
