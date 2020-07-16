@@ -5,6 +5,8 @@ let colorPicker;
 let button;
 let weight = 10;
 let slider;
+let index = -1;
+let globalSize = 10;
 
 
 function setup() {
@@ -30,22 +32,25 @@ function setup() {
         console.log(`server message: ${data.msg}`);
     });
 
-    socket.on("mouseMoved", ({ x, y, px, py, color, size}) => {
-        //fill(255, 255, 0);
-        stroke(color);
-        strokeWeight(size);
-        line(x, y, px, py);
-        //ellipse(x, y, 60);
+    socket.on("mouseMoved", ({ x, y, px, py, color, size, type}) => {
+        if(type == "circle"){
+            fill(color)
+            ellipse(x,y,size,size)
+        }
+        else if (type == "rect"){
+            fill(color)
+            rect(x,y,size,size)
+        }else{
+            stroke(color);
+            strokeWeight(size);
+            line(x, y, px, py);
+        }
+
     });
     socket.on("connect", function () {
         console.log("client connected to server");
         console.log(socket.id);
     });
-
-    button = createButton('BIG');
-    button.position(19, 19);
-    button.mousePressed(weight = weight+1);
-
 
     slider = createSlider(1, 20, 5, 1);
     slider.position(10, 10);
@@ -55,15 +60,10 @@ function setup() {
 
 function draw() { }
 
-function increaseWeight() {
-    console.log("Hello");
-}
-
-
-
 function mouseDragged() {
     //console.log(`${mouseX}, ${mouseY}`);
     //fill(colorPicker.color());
+    if(index == -1){
     let brushSize = slider.value();
     colors = colorPicker.value();
 
@@ -78,7 +78,47 @@ function mouseDragged() {
         px: pmouseX,
         py: pmouseY,
         color: colors,
-        size: brushSize
+        size: brushSize,
+        type: ""
     };
     socket.emit("mouseMoved", data);
+    }
+}
+
+function mouseReleased(){
+    let shapeSize = slider.value()*10;
+    colors = colorPicker.value();
+    let data = {
+        x: mouseX,
+        y: mouseY,
+        px: pmouseX,
+        py: pmouseY,
+        color: colors,
+        size: shapeSize,
+        type: ""
+    };
+    if(index==0){
+        fill(colors)
+        ellipse(mouseX, mouseY, shapeSize, shapeSize)
+        index = -1
+        data.type = "circle"
+        socket.emit("mouseMoved", data);
+    }
+    if (index==1){
+        fill(colors)
+        rect(mouseX, mouseY, shapeSize, shapeSize);
+        index = -1
+        data.type = "rect"
+        socket.emit("mouseMoved", data);
+    }
+
+    
+}
+function drawCircle(){
+    index = 0;
+    console.log("circle was pressed")
+}
+function drawSquare(){
+    index = 1;
+    console.log("circle was pressed")
 }
