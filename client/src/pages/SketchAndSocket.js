@@ -25,6 +25,7 @@ class SketchAndSocket extends React.Component {
             let circleButton;
             let squareButton;
             let clearButton;
+            let homeButton;
             let saveButton;
             let textButton;
             let inputBar;
@@ -95,6 +96,14 @@ class SketchAndSocket extends React.Component {
             saveButton.position(10, 500);
             saveButton.mousePressed(p.saveCanvas)
             p.styleElement(saveButton, ["border", "none", "display", "inline-block", "padding" , "12px 10px" , "text-align" , "center" , "cursor", "pointer" , "white-space", "no-wrap", "color" , "#1a1446", "background", "#ffd000"]);
+
+            homeButton = p.createButton('HOME');
+            homeButton.position(p.windowWidth - 100, 10);
+            homeButton.mousePressed(()=>{
+                window.location.href="/";
+            })
+            p.styleElement(homeButton, ["border", "none", "display", "inline-block", "padding" , "12px 10px" , "text-align" , "center" , "cursor", "pointer" , "white-space", "no-wrap", "color" , "#1a1446", "background", "#ffd000"]);
+
 
             p.noStroke();
             socket.on("mouseMoved", ({ x, y , px, py, color, color2, size, textMsg, type}) => {
