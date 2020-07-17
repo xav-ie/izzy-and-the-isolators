@@ -19,6 +19,7 @@ class SketchAndSocket extends React.Component {
     
     Sketch = (p) => {
             let colorPicker;
+            let colorPicker2;
             let drawButton;
             let eraseButton;
             let circleButton;
@@ -40,17 +41,20 @@ class SketchAndSocket extends React.Component {
 
             p.createCanvas(p.windowWidth, p.windowHeight);
             p.background(20);
-            
-            //create color picker
-            colorPicker = p.createColorPicker('#ed225d');
-            colorPicker.position(10, 100);
-            
+
             //create slider
             slider = p.createSlider(1, 20, 5, 1);
             slider.position(10, 50);
             slider.style('width', '80px');
+            
+            //create color pickers
+            colorPicker = p.createColorPicker('#ed225d');
+            colorPicker.position(0, 100);
+            colorPicker2 = p.createColorPicker('#ed225d');
+            colorPicker2.position(50, 100);
+            
 
-            //create butoons
+            //create buttons
             drawButton = p.createButton('DRAW');
             drawButton.position(10, 150);
             drawButton.mousePressed(p.drawStuff);
@@ -83,17 +87,25 @@ class SketchAndSocket extends React.Component {
             saveButton.mousePressed(p.saveCanvas)
 
             p.noStroke();
-            socket.on("mouseMoved", ({ x, y , px, py, color, size, type}) => {
+            socket.on("mouseMoved", ({ x, y , px, py, color, color2, size, textMsg, type}) => {
                 if(type === "circle"){
                     p.fill(color)
+                    p.stroke(color2)
                     p.ellipse(x,y,size,size)
                 }
                 else if (type === "rect"){
                     p.fill(color)
+                    p.stroke(color2)
                     p.rect(x,y,size,size)
                 }else if (type === "clear"){
                     p.clear();
                     p.background(20);
+                }else if (type === "msg"){
+                    p.textSize(size);
+                    p.fill(0);
+                    p.stroke(color);
+                    p.strokeWeight(size/10);
+                    p.text(textMsg, px, py);
                 }
                 else{
                     p.stroke(color);
@@ -106,9 +118,11 @@ class SketchAndSocket extends React.Component {
         }
 
         p.mouseDragged = () => {
+            
             if(index == -1){
                 let brushSize = slider.value();
                 let colors = colorPicker.value();
+                let colors2 = colorPicker2.value();
 
                 p.stroke(colorPicker.color());
                 p.strokeWeight(brushSize*2);
@@ -119,7 +133,9 @@ class SketchAndSocket extends React.Component {
                     px: p.pmouseX,
                     py: p.pmouseY,
                     color: colors,
+                    color2: colors2,
                     size: brushSize,
+                    textMsg: "",
                     type: ""
                 };
                 socket.emit("mouseMoved", data);
@@ -127,6 +143,7 @@ class SketchAndSocket extends React.Component {
             if(index == 3){
                 let brushSize = slider.value();
                 let colors = '#141414'
+                let colors2 = '#141414'
                 p.stroke(20);
                 p.strokeWeight(brushSize*2);
                 p.line(p.mouseX, p.mouseY, p.pmouseX, p.pmouseY);
@@ -136,7 +153,9 @@ class SketchAndSocket extends React.Component {
                     px: p.pmouseX,
                     py: p.pmouseY,
                     color: colors,
+                    color2: colors2,
                     size: brushSize,
+                    textMsg: "",
                     type: "erase"
                 };
                 socket.emit("mouseMoved", data);
@@ -145,6 +164,7 @@ class SketchAndSocket extends React.Component {
         p.mouseReleased = () => {
             let shapeSize = slider.value()*20;
             let colors = colorPicker.value();
+            let colors2 = colorPicker2.value();
             let brushSize = slider.value();
             let data = {
                 x: p.mouseX,
@@ -152,11 +172,14 @@ class SketchAndSocket extends React.Component {
                 px: p.pmouseX,
                 py: p.pmouseY,
                 color: colors,
+                color2: colors2,
                 size: shapeSize,
+                textMsg: "",
                 type: ""
             };
             if(index == 0){
                 p.fill(colors);
+                p.stroke(colors2);
                 p.ellipse(p.mouseX, p.mouseY, shapeSize, shapeSize);
                 index = -1;
                 data.type = "circle";
@@ -165,6 +188,7 @@ class SketchAndSocket extends React.Component {
             }
             if (index == 1){
                 p.fill(colors);
+                p.stroke(colors2);
                 p.rect(p.mouseX, p.mouseY, shapeSize, shapeSize);
                 index = -1;
                 data.type = "rect";
@@ -178,6 +202,19 @@ class SketchAndSocket extends React.Component {
                 p.strokeWeight(shapeSize/10);
                 p.text(msg, p.mouseX, p.mouseY);
                 index = -1;
+
+                let data = {
+                    x: p.mouseX,
+                    y: p.mouseY,
+                    px: p.pmouseX,
+                    py: p.pmouseY,
+                    color: colors,
+                    color2: colors2,
+                    size: shapeSize,
+                    textMsg: msg,
+                    type: "msg"
+                };
+                socket.emit("mouseMoved", data);
             }
         }
         
@@ -206,7 +243,9 @@ class SketchAndSocket extends React.Component {
                 px: p.pmouseX,
                 py: p.pmouseY,
                 color: "",
+                color2: "",
                 size: "",
+                textMsg: "",
                 type: "clear"
             };
             socket.emit("mouseMoved", data);
